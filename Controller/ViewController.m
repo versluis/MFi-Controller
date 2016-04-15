@@ -12,9 +12,12 @@
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) IBOutlet UILabel *messageLabel;
+@property (strong, nonatomic) UIImageView *crabView;
 @property (strong, nonatomic) GCController *mainController;
 @property (strong, nonatomic) UIViewController *pausedViewController;
 @property BOOL currentlyPaused;
+@property int screenX;
+@property int screenY;
 @end
 
 @implementation ViewController
@@ -28,6 +31,17 @@
     return _pausedViewController;
 }
 
+- (UIImageView *)crabView {
+    
+    if (!_crabView) {
+        _crabView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"crab"]];
+        _crabView.contentMode = UIViewContentModeRedraw;
+        _crabView.frame = CGRectMake(0, 0, 80, 80);
+        [self.view addSubview:_crabView];
+    }
+    return _crabView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -37,6 +51,10 @@
     // notifications for controller (dis)connect
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(controllerWasConnected:) name:GCControllerDidConnectNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(controllerWasDisconnected:) name:GCControllerDidDisconnectNotification object:nil];
+    
+    // detect screen size and position crab
+    [self detectScreenSize];
+    [self updatePosition:CGPointMake(0, 0)];
     
 }
 
@@ -74,7 +92,8 @@
     GCExtendedGamepad *profile = self.mainController.extendedGamepad;
     profile.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element)
     {
-        NSString *message = nil;
+        NSString *message = @"";
+        CGPoint position = CGPointMake(0, 0);
         
         // left trigger
         if (gamepad.leftTrigger == element && gamepad.leftTrigger.isPressed) {
@@ -146,6 +165,7 @@
             if (gamepad.leftThumbstick.right.isPressed) {
                 message = [NSString stringWithFormat:@"Left Stick %f", gamepad.leftThumbstick.xAxis.value];
             }
+            position = CGPointMake(gamepad.leftThumbstick.xAxis.value, gamepad.leftThumbstick.yAxis.value);
         }
         
         // right stick
@@ -162,9 +182,11 @@
             if (gamepad.rightThumbstick.right.isPressed) {
                 message = [NSString stringWithFormat:@"Right Stick %f", gamepad.rightThumbstick.xAxis.value];
             }
+            position = CGPointMake(gamepad.rightThumbstick.xAxis.value, gamepad.rightThumbstick.yAxis.value);
         }
         
         [self displayMessage:message];
+        [self updatePosition:position];
         
     };
     
@@ -194,6 +216,23 @@
     // update message label
     self.navigationItem.title = message;
 
+}
+
+- (void)updatePosition:(CGPoint)position {
+    
+    // move crab to desired position
+    CGPoint newPosition = CGPointMake((self.screenX * position.x) + (self.screenX), (self.screenY * -position.y) + (self.screenY));
+    self.crabView.center = newPosition;
+    
+}
+    
+
+- (void)detectScreenSize {
+    
+    // run at startup to determine screen size
+    // screenX and screenY represent coordinates for the center position
+    self.screenX = [UIScreen mainScreen].bounds.size.width / 2;
+    self.screenY = [UIScreen mainScreen].bounds.size.height / 2;
 }
 
 
