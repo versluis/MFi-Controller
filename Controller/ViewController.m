@@ -74,93 +74,97 @@
     GCExtendedGamepad *profile = self.mainController.extendedGamepad;
     profile.valueChangedHandler = ^(GCExtendedGamepad *gamepad, GCControllerElement *element)
     {
+        NSString *message = nil;
+        
         // left trigger
         if (gamepad.leftTrigger == element && gamepad.leftTrigger.isPressed) {
-            [self displayMessage:@"Left Trigger"];
+            message = @"Left Trigger";
         }
         
         // right trigger
         if (gamepad.rightTrigger == element && gamepad.rightTrigger.isPressed) {
-            [self displayMessage:@"Right Trigger"];
+            message = @"Right Trigger";
         }
         
         // left shoulder button
         if (gamepad.leftShoulder == element && gamepad.leftShoulder.isPressed) {
-            [self displayMessage:@"Left Shoulder Button"];
+            message = @"Left Shoulder Button";
         }
         
         // right shoulder button
         if (gamepad.rightShoulder == element && gamepad.rightShoulder.isPressed) {
-            [self displayMessage:@"Right Shoulder Button"];
+            message = @"Right Shoulder Button";
         }
         
         // A button
         if (gamepad.buttonA == element && gamepad.buttonA.isPressed) {
-            [self displayMessage:@"A Button"];
+            message = @"A Button";
         }
         
         // B button
         if (gamepad.buttonB == element && gamepad.buttonB.isPressed) {
-            [self displayMessage:@"B Button"];
+            message = @"B Button";
         }
         
         // X button
         if (gamepad.buttonX == element && gamepad.buttonX.isPressed) {
-            [self displayMessage:@"X Button"];
+            message = @"X Button";
         }
         
         // Y button
         if (gamepad.buttonY == element && gamepad.buttonY.isPressed) {
-            [self displayMessage:@"Y Button"];
+            message = @"Y Button";
         }
         
         // d-pad
         if (gamepad.dpad == element) {
             if (gamepad.dpad.up.isPressed) {
-                [self displayMessage:@"D-Pad Up"];
+                message = @"D-Pad Up";
             }
             if (gamepad.dpad.down.isPressed) {
-                [self displayMessage:@"D-Pad Down"];
+                message = @"D-Pad Down";
             }
             if (gamepad.dpad.left.isPressed) {
-                [self displayMessage:@"D-Pad Left"];
+                message = @"D-Pad Left";
             }
             if (gamepad.dpad.right.isPressed) {
-                [self displayMessage:@"D-Pad Right"];
+                message = @"D-Pad Right";
             }
         }
         
         // left stick
         if (gamepad.leftThumbstick == element) {
             if (gamepad.leftThumbstick.up.isPressed) {
-                [self displayMessage:@"Left Stick Up"];
+                message = [NSString stringWithFormat:@"Left Stick %f", gamepad.leftThumbstick.yAxis.value];
             }
             if (gamepad.leftThumbstick.down.isPressed) {
-                [self displayMessage:@"Left Stick Down"];
+                message = [NSString stringWithFormat:@"Left Stick %f", gamepad.leftThumbstick.yAxis.value];
             }
             if (gamepad.leftThumbstick.left.isPressed) {
-                [self displayMessage:@"Left Stick Left"];
+                message = [NSString stringWithFormat:@"Left Stick %f", gamepad.leftThumbstick.xAxis.value];
             }
             if (gamepad.leftThumbstick.right.isPressed) {
-                [self displayMessage:@"Left Stick Right"];
+                message = [NSString stringWithFormat:@"Left Stick %f", gamepad.leftThumbstick.xAxis.value];
             }
         }
         
         // right stick
         if (gamepad.rightThumbstick == element) {
             if (gamepad.rightThumbstick.up.isPressed) {
-                [self displayMessage:@"Right Stick Up"];
+                message = [NSString stringWithFormat:@"Right Stick %f", gamepad.rightThumbstick.yAxis.value];
             }
             if (gamepad.rightThumbstick.down.isPressed) {
-                [self displayMessage:@"Right Stick Down"];
+                message = [NSString stringWithFormat:@"Right Stick %f", gamepad.rightThumbstick.yAxis.value];
             }
             if (gamepad.rightThumbstick.left.isPressed) {
-                [self displayMessage:@"Right Stick Left"];
+                message = [NSString stringWithFormat:@"Right Stick %f", gamepad.rightThumbstick.xAxis.value];
             }
             if (gamepad.rightThumbstick.right.isPressed) {
-                [self displayMessage:@"Right Stick Right"];
+                message = [NSString stringWithFormat:@"Right Stick %f", gamepad.rightThumbstick.xAxis.value];
             }
         }
+        
+        [self displayMessage:message];
         
     };
     
