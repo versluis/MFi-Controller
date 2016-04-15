@@ -70,5 +70,35 @@
             </objects>
             <point key="canvasLocation" x="372" y="1089"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Grn-7f-v58">
+            <objects>
+                <viewController storyboardIdentifier="PausedScreen" id="IDW-3l-Tla" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aQO-wO-OkX"/>
+                        <viewControllerLayoutGuide type="bottom" id="gey-pO-9G9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6c3-hK-tSo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paused" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EhZ-U1-fFP">
+                                <rect key="frame" x="272" y="289" width="57" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EhZ-U1-fFP" firstAttribute="centerY" secondItem="6c3-hK-tSo" secondAttribute="centerY" id="OLT-oY-TtY"/>
+                            <constraint firstItem="EhZ-U1-fFP" firstAttribute="centerX" secondItem="6c3-hK-tSo" secondAttribute="centerX" id="dEN-te-B6A"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M2D-Px-lGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1111" y="1095"/>
+        </scene>
     </scenes>
 </document>

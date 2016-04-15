@@ -11,10 +11,22 @@
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) IBOutlet UILabel *messageLabel;
 @property (strong, nonatomic) GCController *mainController;
+@property (strong, nonatomic) UIViewController *pausedViewController;
+@property BOOL currentlyPaused;
 @end
 
 @implementation ViewController
+
+- (UIViewController *)pausedViewController {
+    
+    if (!_pausedViewController) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        _pausedViewController = [storyboard instantiateViewControllerWithIdentifier:@"PausedScreen"];
+    }
+    return _pausedViewController;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -152,8 +164,24 @@
         
     };
     
+    // we need a weak self here for in-block access
+    __weak typeof(self) weakSelf = self;
+    
     self.mainController.controllerPausedHandler = ^(GCController *controller){
-        [self displayMessage:@"Pause Button"];
+        
+        // check if we're currently paused or not
+        // then bring up or remove the paused view controller
+        if (weakSelf.currentlyPaused) {
+            
+            weakSelf.currentlyPaused = NO;
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        
+        } else {
+            
+            weakSelf.currentlyPaused = YES;
+            [weakSelf presentViewController:weakSelf.pausedViewController animated:YES completion:nil];
+        }
+        
     };
 }
 
